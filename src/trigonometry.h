@@ -38,6 +38,13 @@ constexpr double pi = 3.141592653589793238462643383279502884L;
 
 }
 
+
+/**
+ * \brief Base type for angle-like objects
+ *
+ * \tparam T The storage type of angle value
+ * \tparam CONV The conversion object with a constexpr static 'semicircle' containing the value for a half circle.
+ */
 template< typename T, typename CONV >
 struct basic_angle
 {
@@ -150,11 +157,19 @@ struct basic_angle
         return value != other.value;
     }
 
+    /**
+     * \brief Returns the value of the angle object.
+     * 
+     * \return The value of the angle object.
+     */
     TRIGONOMETRY_NODISCARD constexpr T angle() const
     {
         return value;
     }
 
+    /**
+     * \brief Normalizes the angle object between -/+ semicircle.
+     */
     constexpr void normalize()
     {
         const auto full_cicle = CONV::semicircle * 2.0;
@@ -172,6 +187,13 @@ struct basic_angle
         value = static_cast< T >( normalized );
     }
 
+    /**
+     * \brief Returns a normalized angle object with a value between -/+ semicircle.
+     * 
+     *  The angle object itself is left unchanged.
+     * 
+     * \return A normalized copy of the angle object.
+     */
     TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > normalized() const
     {
         auto new_normalized = *this;
@@ -180,6 +202,9 @@ struct basic_angle
         return new_normalized;
     }
 
+    /**
+     * \brief Normalizes the angle object to a value between 0 to 2 * semicircle.
+     */
     constexpr void normalize_abs()
     {
         const auto full_cicle = CONV::semicircle * 2.0;
@@ -193,6 +218,13 @@ struct basic_angle
         value = static_cast< T >( normalized );
     }
 
+    /**
+     * \brief Returns a normalized angle object with a value between 0 to 2 * semicircle.
+     * 
+     *  The angle object itself is left unchanged.
+     * 
+     * \return A normalized copy of the angle object.
+     */
     TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > normalized_abs() const
     {
         auto new_normalized = *this;
@@ -206,27 +238,59 @@ protected:
     T value = T();
 };
 
-template< typename T, typename ANGLE_CONV,
+/**
+ * \brief Returns an angle object with a value that is the nearest integer value not less than value from the given angle object.
+ *
+ * \param angle The angle object from which the value of new angle object is derived.
+ * 
+ * \return An angle object with a value that is the nearest integer value not less than value from the given angle object.
+ */
+template< typename T, typename CONV,
           typename std::enable_if< std::is_floating_point< T >::value, int >::type = 0 >
-TRIGONOMETRY_NODISCARD constexpr basic_angle< T, ANGLE_CONV > ceil( basic_angle< T, ANGLE_CONV > angle )
+TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T, CONV > angle )
 {
     return { std::ceil( angle.angle() ) };
 }
 
-template< typename T, typename ANGLE_CONV,
+/**
+ * \brief Returns an angle object with a value that is the largest integer value not greater than value from the given angle object.
+ *
+ * \param angle The angle object from whichthe value of new angle is derived.
+ * 
+ * \return An angle object with a value that is the largest integer value not greater than value from the given angle object.
+ */
+template< typename T, typename CONV,
           typename std::enable_if< std::is_floating_point< T >::value, int >::type = 0 >
-TRIGONOMETRY_NODISCARD constexpr basic_angle< T, ANGLE_CONV > floor( basic_angle< T, ANGLE_CONV > angle )
+TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T, CONV > angle )
 {
     return { std::floor( angle.angle() ) };
 }
 
-template< typename T, typename ANGLE_CONV,
+/**
+ * \brief Returns an angle object with a value that is the nearest integer of the value from the given angle object.
+ *
+ * \param angle The angle object from which the value of new angle is derived.
+ * 
+ * \return An angle object with a value that is the nearest integer value of the value from the given angle object.
+ */
+template< typename T, typename CONV,
           typename std::enable_if< std::is_floating_point< T >::value, int >::type = 0 >
-TRIGONOMETRY_NODISCARD constexpr basic_angle< T, ANGLE_CONV > round( basic_angle< T, ANGLE_CONV > angle )
+TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > round( basic_angle< T, CONV > angle )
 {
     return { std::round( angle.angle() ) };
 }
 
+/**
+ * \brief Returns angle object of the given type that is derived another angle object.
+ *
+ * \tparam TO The type of the returned angle object.
+ * \tparam FROM_T The storage type of the angle from which the new angle object is derived
+ * \tparam FROM_CONV The conversion object of the angle from which the new angle object is derived
+ * 
+ * \param angle The angle object from which the new angle object is derived.
+ * 
+ * \return A new angle object of type \em TO with a value derived from \em from.
+ */
 template< typename TO, typename FROM_T, typename FROM_CONV >
 TRIGONOMETRY_NODISCARD constexpr TO angle_cast( const basic_angle< FROM_T, FROM_CONV > from )
 {
@@ -234,16 +298,25 @@ TRIGONOMETRY_NODISCARD constexpr TO angle_cast( const basic_angle< FROM_T, FROM_
     return { static_cast< typename TO::value_type >( new_angle ) };
 }
 
+/**
+ * \brief Standard conversion type for angles in degrees
+ */
 struct deg_conv
 {
     constexpr static long double semicircle = 180.0;
 };
 
+/**
+ * \brief Standard conversion type for angles in radians
+ */
 struct rad_conv
 {
     constexpr static long double semicircle = detail::trig::pi;
 };
 
+/**
+ * \brief Standard conversion type for angles in gradians
+ */
 struct grad_conv
 {
     constexpr static long double semicircle = 200.0;
@@ -253,76 +326,168 @@ using deg  = basic_angle< double, deg_conv >;
 using rad  = basic_angle< double, rad_conv >;
 using grad = basic_angle< double, grad_conv >;
 
+/**
+ * \brief Computes sine.
+ * 
+ * \param x An angle object.
+ * 
+ * \return The sine of x.
+ */
 template< typename CONV, typename T >
 TRIGONOMETRY_NODISCARD constexpr auto sin( basic_angle< T, CONV > x )
 {
-    auto radians = ( detail::trig::pi * x.angle() ) / CONV::semicircle;
+    auto radians = detail::trig::pi * x.angle() / CONV::semicircle;
     return std::sin( radians );
 }
 
+/**
+ * \brief Computes arc sine.
+ * 
+ * \param x An arithmetic type.
+ * 
+ * \return The arc sine of x as pg::math::rad.
+ */
 template< typename T >
 TRIGONOMETRY_NODISCARD constexpr rad asin( T x )
 {
     return { static_cast< rad::value_type >( std::asin( x ) ) };
 }
 
+/**
+ * \brief Computes arc sine.
+ * 
+ * \tparam TO The resulting angle object type containing the arc sine of \em x.
+ * \tparam T The arithmetic type of \em x.
+ * 
+ * \param x An arithmetic value for wich the sine is calculated.
+ * 
+ * \return The arc sine of x as \em TO.
+ */
 template< typename TO, typename T >
 TRIGONOMETRY_NODISCARD constexpr TO asin( T x )
 {
-    auto value = ( TO::conversion::semicircle * std::asin( x ) ) / ( detail::trig::pi );
+    auto value = TO::conversion::semicircle * std::asin( x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
 }
 
+/**
+ * \brief Computes cosine.
+ * 
+ * \param x An angle object.
+ * 
+ * \return The cosine of x.
+ */
 template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr auto cos( basic_angle< T, CONV > x )
 {
-    auto radians = ( detail::trig::pi * x.angle() ) / CONV::semicircle;
+    auto radians = detail::trig::pi * x.angle() / CONV::semicircle;
     return std::cos( radians );
 }
 
+/**
+ * \brief Computes arc cosine.
+ * 
+ * \param x An arithmetic type.
+ * 
+ * \return The arc cosine of x as pg::math::rad.
+ */
 template< typename T >
 TRIGONOMETRY_NODISCARD constexpr rad acos( T x )
 {
     return { static_cast< rad::value_type >( std::acos( x ) ) };
 }
 
+/**
+ * \brief Computes arc cosine.
+ * 
+ * \tparam TO The resulting angle object type containing the arc cosine of \em x.
+ * \tparam T The arithmetic type of \em x.
+ * 
+ * \param x An arithmetic value for wich the cosine is calculated.
+ * 
+ * \return The arc cosine as \em TO.
+ */
 template< typename TO, typename T >
 TRIGONOMETRY_NODISCARD constexpr TO acos( T x )
 {
-    auto value = ( TO::conversion::semicircle * std::acos( x ) ) / ( detail::trig::pi );
+    auto value = TO::conversion::semicircle * std::acos( x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
 }
 
+/**
+ * \brief Computes tangent.
+ * 
+ * \param x An angle object.
+ * 
+ * \return The tangent of x.
+ */
 template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr auto tan( basic_angle< T, CONV > x )
 {
-    auto radians = ( detail::trig::pi * x.angle() ) / CONV::semicircle;
+    auto radians = detail::trig::pi * x.angle() / CONV::semicircle;
     return std::tan( radians );
 }
 
+/**
+ * \brief Computes arc tangent.
+ * 
+ * \param x An arithmetic type.
+ * 
+ * \return The arc tangent of x as pg::math::rad.
+ */
 template< typename T >
 TRIGONOMETRY_NODISCARD constexpr rad atan( T x )
 {
     return { static_cast< rad::value_type >( std::atan( x )  )};
 }
 
+/**
+ * \brief Computes arc tangent.
+ * 
+ * \tparam TO The resulting angle object type containing the arc tangent of \em x.
+ * \tparam T The arithmetic type of \em x.
+ * 
+ * \param x An arithmetic value for wich the tangent is calculated.
+ * 
+ * \return The arc tangent of x as \em TO.
+ */
 template< typename TO, typename T >
 TRIGONOMETRY_NODISCARD constexpr TO atan( T x )
 {
-    auto value = ( TO::conversion::semicircle * std::atan( x ) ) / ( detail::trig::pi );
+    auto value = TO::conversion::semicircle * std::atan( x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
 }
 
+/**
+ * \brief Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
+ * 
+ * \param x An arithmetic value.
+ * \param y An arithmetic value.
+ * 
+ * \return The arc tangent of x as pg::math::rad.
+ */
 template< typename T1, typename T2 >
 TRIGONOMETRY_NODISCARD constexpr rad atan2( T1 x, T2 y )
 {
     return { static_cast< rad::value_type >( std::atan2( x, y )  )};
 }
 
+/**
+ * \brief Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
+ * 
+ * \tparam TO The resulting angle object type containing the arc tangent of \em x.
+ * \tparam T1 The arithmetic type of \em x.
+ * \tparam T2 The arithmetic type of \em y.
+ * 
+ * \param x An arithmetic value.
+ * \param y An arithmetic value.
+ * 
+ * \return The arc tangent of x as \em TO.
+ */
 template< typename TO, typename T1, typename T2 >
 TRIGONOMETRY_NODISCARD constexpr TO atan2( T1 x, T2 y )
 {
-    auto value = ( TO::conversion::semicircle * std::atan2( x, y ) ) / ( detail::trig::pi );
+    auto value = TO::conversion::semicircle * std::atan2( x, y ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
 }
 
