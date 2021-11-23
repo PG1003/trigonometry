@@ -245,8 +245,7 @@ protected:
  * 
  * \return An angle object with a value that is the nearest integer value not less than value from the given angle object.
  */
-template< typename T, typename CONV,
-          typename std::enable_if< std::is_floating_point< T >::value, int >::type = 0 >
+template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T, CONV > angle )
 {
     return { std::ceil( angle.angle() ) };
@@ -259,8 +258,7 @@ TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T, CO
  * 
  * \return An angle object with a value that is the largest integer value not greater than value from the given angle object.
  */
-template< typename T, typename CONV,
-          typename std::enable_if< std::is_floating_point< T >::value, int >::type = 0 >
+template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T, CONV > angle )
 {
     return { std::floor( angle.angle() ) };
@@ -273,8 +271,7 @@ TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T, C
  * 
  * \return An angle object with a value that is the nearest integer value of the value from the given angle object.
  */
-template< typename T, typename CONV,
-          typename std::enable_if< std::is_floating_point< T >::value, int >::type = 0 >
+template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > round( basic_angle< T, CONV > angle )
 {
     return { std::round( angle.angle() ) };
