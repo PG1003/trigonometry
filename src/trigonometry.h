@@ -239,11 +239,11 @@ protected:
 };
 
 /**
- * \brief Returns an angle object with a value that is the nearest integer value not less than value from the given angle object.
+ * \brief Returns an angle object with a value that is the nearest integer value not less than value of \em angle.
  *
  * \param angle The angle object from which the value of new angle object is derived.
  * 
- * \return An angle object with a value that is the nearest integer value not less than value from the given angle object.
+ * \return An angle object with a value that is the nearest integer value not less than value of \em angle.
  */
 template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T, CONV > angle )
@@ -252,11 +252,11 @@ TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T, CO
 }
 
 /**
- * \brief Returns an angle object with a value that is the largest integer value not greater than value from the given angle object.
+ * \brief Returns an angle object with a value that is the largest integer value not greater than value of \em angle.
  *
  * \param angle The angle object from whichthe value of new angle is derived.
  * 
- * \return An angle object with a value that is the largest integer value not greater than value from the given angle object.
+ * \return An angle object with a value that is the largest integer value not greater than value of \em angle.
  */
 template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T, CONV > angle )
@@ -265,11 +265,11 @@ TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T, C
 }
 
 /**
- * \brief Returns an angle object with a value that is the nearest integer of the value from the given angle object.
+ * \brief Returns an angle object with a value that is the nearest integer of the value of \em angle.
  *
  * \param angle The angle object from which the value of new angle is derived.
  * 
- * \return An angle object with a value that is the nearest integer value of the value from the given angle object.
+ * \return An angle object with a value that is the nearest integer value of the value of \em angle.
  */
 template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > round( basic_angle< T, CONV > angle )
@@ -328,7 +328,7 @@ using grad = basic_angle< double, grad_conv >;
  * 
  * \param x An angle object.
  * 
- * \return The sine of x.
+ * \return The sine of \em x.
  */
 template< typename CONV, typename T >
 TRIGONOMETRY_NODISCARD constexpr auto sin( basic_angle< T, CONV > x )
@@ -342,7 +342,7 @@ TRIGONOMETRY_NODISCARD constexpr auto sin( basic_angle< T, CONV > x )
  * 
  * \param x An arithmetic type.
  * 
- * \return The arc sine of x as pg::math::rad.
+ * \return The arc sine of \em x as pg::math::rad.
  */
 template< typename T >
 TRIGONOMETRY_NODISCARD constexpr rad asin( T x )
@@ -358,7 +358,7 @@ TRIGONOMETRY_NODISCARD constexpr rad asin( T x )
  * 
  * \param x An arithmetic value for wich the sine is calculated.
  * 
- * \return The arc sine of x as \em TO.
+ * \return The arc sine of \em x as \em TO.
  */
 template< typename TO, typename T >
 TRIGONOMETRY_NODISCARD constexpr TO asin( T x )
@@ -372,7 +372,7 @@ TRIGONOMETRY_NODISCARD constexpr TO asin( T x )
  * 
  * \param x An angle object.
  * 
- * \return The cosine of x.
+ * \return The cosine of \em x.
  */
 template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr auto cos( basic_angle< T, CONV > x )
@@ -386,7 +386,7 @@ TRIGONOMETRY_NODISCARD constexpr auto cos( basic_angle< T, CONV > x )
  * 
  * \param x An arithmetic type.
  * 
- * \return The arc cosine of x as pg::math::rad.
+ * \return The arc cosine of \em x as pg::math::rad.
  */
 template< typename T >
 TRIGONOMETRY_NODISCARD constexpr rad acos( T x )
@@ -402,7 +402,7 @@ TRIGONOMETRY_NODISCARD constexpr rad acos( T x )
  * 
  * \param x An arithmetic value for wich the cosine is calculated.
  * 
- * \return The arc cosine as \em TO.
+ * \return The arc cosine of \em x as \em TO.
  */
 template< typename TO, typename T >
 TRIGONOMETRY_NODISCARD constexpr TO acos( T x )
@@ -416,7 +416,7 @@ TRIGONOMETRY_NODISCARD constexpr TO acos( T x )
  * 
  * \param x An angle object.
  * 
- * \return The tangent of x.
+ * \return The tangent of \em x.
  */
 template< typename T, typename CONV >
 TRIGONOMETRY_NODISCARD constexpr auto tan( basic_angle< T, CONV > x )
@@ -430,7 +430,7 @@ TRIGONOMETRY_NODISCARD constexpr auto tan( basic_angle< T, CONV > x )
  * 
  * \param x An arithmetic type.
  * 
- * \return The arc tangent of x as pg::math::rad.
+ * \return The arc tangent of \em x as pg::math::rad.
  */
 template< typename T >
 TRIGONOMETRY_NODISCARD constexpr rad atan( T x )
@@ -446,7 +446,7 @@ TRIGONOMETRY_NODISCARD constexpr rad atan( T x )
  * 
  * \param x An arithmetic value for wich the tangent is calculated.
  * 
- * \return The arc tangent of x as \em TO.
+ * \return The arc tangent of \em x as \em TO.
  */
 template< typename TO, typename T >
 TRIGONOMETRY_NODISCARD constexpr TO atan( T x )
@@ -461,7 +461,7 @@ TRIGONOMETRY_NODISCARD constexpr TO atan( T x )
  * \param x An arithmetic value.
  * \param y An arithmetic value.
  * 
- * \return The arc tangent of x as pg::math::rad.
+ * \return The arc tangent of \em x as pg::math::rad.
  */
 template< typename T1, typename T2 >
 TRIGONOMETRY_NODISCARD constexpr rad atan2( T1 x, T2 y )
@@ -479,7 +479,7 @@ TRIGONOMETRY_NODISCARD constexpr rad atan2( T1 x, T2 y )
  * \param x An arithmetic value.
  * \param y An arithmetic value.
  * 
- * \return The arc tangent of x as \em TO.
+ * \return The arc tangent of \em x, \em y as \em TO.
  */
 template< typename TO, typename T1, typename T2 >
 TRIGONOMETRY_NODISCARD constexpr TO atan2( T1 x, T2 y )
