@@ -8,12 +8,12 @@
 #endif
 
 #ifdef __has_cpp_attribute
-#if __has_cpp_attribute( nodiscard )
-#define TRIGONOMETRY_NODISCARD [[nodiscard]]
+# if __has_cpp_attribute( nodiscard )
+#  define PG_TRIGONOMETRY_NODISCARD [[nodiscard]]
+# endif
 #endif
-#endif
-#ifndef TRIGONOMETRY_NODISCARD
-#define TRIGONOMETRY_NODISCARD
+#ifndef PG_TRIGONOMETRY_NODISCARD
+# define PG_TRIGONOMETRY_NODISCARD
 #endif
 
 namespace pg
@@ -66,7 +66,7 @@ struct basic_angle
         return *this;
     }
 
-    TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator +( basic_angle< T, CONV > other ) const
+    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator +( basic_angle< T, CONV > other ) const
     {
         return { value + other.value };
     }
@@ -77,7 +77,7 @@ struct basic_angle
         return *this;
     }
 
-    TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator -( const basic_angle< T, CONV > other ) const
+    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator -( const basic_angle< T, CONV > other ) const
     {
         return { value - other.value };
     }
@@ -89,7 +89,7 @@ struct basic_angle
     }
 
     template< typename D >
-    TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator /( D number ) const
+    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator /( D number ) const
     {
         return { static_cast< T >( value / number ) };
     }
@@ -102,7 +102,7 @@ struct basic_angle
     }
 
     template< typename M >
-    TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator *( M number ) const
+    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator *( M number ) const
     {
         return { static_cast< T >( value * number ) };
     }
@@ -115,7 +115,7 @@ struct basic_angle
     }
 
     template< typename M >
-    TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator %( M number ) const
+    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator %( M number ) const
     {
         return { static_cast< T >( std::fmod( value, number ) ) };
     }
@@ -127,32 +127,32 @@ struct basic_angle
         return *this;
     }
 
-    TRIGONOMETRY_NODISCARD constexpr bool operator <( const basic_angle< T, CONV > other )
+    PG_TRIGONOMETRY_NODISCARD constexpr bool operator <( const basic_angle< T, CONV > other )
     {
         return value < other.value;
     }
 
-    TRIGONOMETRY_NODISCARD constexpr bool operator <=( const basic_angle< T, CONV > other )
+    PG_TRIGONOMETRY_NODISCARD constexpr bool operator <=( const basic_angle< T, CONV > other )
     {
         return value <= other.value;
     }
 
-    TRIGONOMETRY_NODISCARD constexpr bool operator >( const basic_angle< T, CONV > other )
+    PG_TRIGONOMETRY_NODISCARD constexpr bool operator >( const basic_angle< T, CONV > other )
     {
         return value > other.value;
     }
 
-    TRIGONOMETRY_NODISCARD constexpr bool operator >=( const basic_angle< T, CONV > other )
+    PG_TRIGONOMETRY_NODISCARD constexpr bool operator >=( const basic_angle< T, CONV > other )
     {
         return value >= other.value;
     }
 
-    TRIGONOMETRY_NODISCARD constexpr bool operator ==( const basic_angle< T, CONV > other )
+    PG_TRIGONOMETRY_NODISCARD constexpr bool operator ==( const basic_angle< T, CONV > other )
     {
         return value == other.value;
     }
 
-    TRIGONOMETRY_NODISCARD constexpr bool operator !=( const basic_angle< T, CONV > other )
+    PG_TRIGONOMETRY_NODISCARD constexpr bool operator !=( const basic_angle< T, CONV > other )
     {
         return value != other.value;
     }
@@ -162,7 +162,7 @@ struct basic_angle
      * 
      * \return The value of the angle object.
      */
-    TRIGONOMETRY_NODISCARD constexpr T angle() const
+    PG_TRIGONOMETRY_NODISCARD constexpr T angle() const
     {
         return value;
     }
@@ -194,7 +194,7 @@ struct basic_angle
      * 
      * \return A normalized copy of the angle object.
      */
-    TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > normalized() const
+    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > normalized() const
     {
         auto new_normalized = *this;
         new_normalized.normalize();
@@ -225,7 +225,7 @@ struct basic_angle
      * 
      * \return A normalized copy of the angle object.
      */
-    TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > normalized_abs() const
+    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > normalized_abs() const
     {
         auto new_normalized = *this;
         new_normalized.normalize_abs();
@@ -246,7 +246,7 @@ protected:
  * \return An angle object with a value that is the nearest integer value not less than value of \em angle.
  */
 template< typename T, typename CONV >
-TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T, CONV > angle )
+PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T, CONV > angle )
 {
     return { std::ceil( angle.angle() ) };
 }
@@ -259,7 +259,7 @@ TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T, CO
  * \return An angle object with a value that is the largest integer value not greater than value of \em angle.
  */
 template< typename T, typename CONV >
-TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T, CONV > angle )
+PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T, CONV > angle )
 {
     return { std::floor( angle.angle() ) };
 }
@@ -272,7 +272,7 @@ TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T, C
  * \return An angle object with a value that is the nearest integer value of the value of \em angle.
  */
 template< typename T, typename CONV >
-TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > round( basic_angle< T, CONV > angle )
+PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > round( basic_angle< T, CONV > angle )
 {
     return { std::round( angle.angle() ) };
 }
@@ -289,7 +289,7 @@ TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > round( basic_angle< T, C
  * \return A new angle object of type \em TO with a value derived from \em from.
  */
 template< typename TO, typename FROM_T, typename FROM_CONV >
-TRIGONOMETRY_NODISCARD constexpr TO angle_cast( const basic_angle< FROM_T, FROM_CONV > from )
+PG_TRIGONOMETRY_NODISCARD constexpr TO angle_cast( const basic_angle< FROM_T, FROM_CONV > from )
 {
     const auto new_angle = from.angle() * ( TO::conversion::semicircle / FROM_CONV::semicircle );
     return { static_cast< typename TO::value_type >( new_angle ) };
@@ -331,7 +331,7 @@ using grad = basic_angle< double, grad_conv >;
  * \return The sine of \em x.
  */
 template< typename CONV, typename T >
-TRIGONOMETRY_NODISCARD constexpr auto sin( basic_angle< T, CONV > x )
+PG_TRIGONOMETRY_NODISCARD constexpr auto sin( basic_angle< T, CONV > x )
 {
     auto radians = detail::trig::pi * x.angle() / CONV::semicircle;
     return std::sin( radians );
@@ -345,7 +345,7 @@ TRIGONOMETRY_NODISCARD constexpr auto sin( basic_angle< T, CONV > x )
  * \return The arc sine of \em x as pg::math::rad.
  */
 template< typename T >
-TRIGONOMETRY_NODISCARD constexpr rad asin( T x )
+PG_TRIGONOMETRY_NODISCARD constexpr rad asin( T x )
 {
     return { static_cast< rad::value_type >( std::asin( x ) ) };
 }
@@ -361,7 +361,7 @@ TRIGONOMETRY_NODISCARD constexpr rad asin( T x )
  * \return The arc sine of \em x as \em TO.
  */
 template< typename TO, typename T >
-TRIGONOMETRY_NODISCARD constexpr TO asin( T x )
+PG_TRIGONOMETRY_NODISCARD constexpr TO asin( T x )
 {
     auto value = TO::conversion::semicircle * std::asin( x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
@@ -375,7 +375,7 @@ TRIGONOMETRY_NODISCARD constexpr TO asin( T x )
  * \return The cosine of \em x.
  */
 template< typename T, typename CONV >
-TRIGONOMETRY_NODISCARD constexpr auto cos( basic_angle< T, CONV > x )
+PG_TRIGONOMETRY_NODISCARD constexpr auto cos( basic_angle< T, CONV > x )
 {
     auto radians = detail::trig::pi * x.angle() / CONV::semicircle;
     return std::cos( radians );
@@ -389,7 +389,7 @@ TRIGONOMETRY_NODISCARD constexpr auto cos( basic_angle< T, CONV > x )
  * \return The arc cosine of \em x as pg::math::rad.
  */
 template< typename T >
-TRIGONOMETRY_NODISCARD constexpr rad acos( T x )
+PG_TRIGONOMETRY_NODISCARD constexpr rad acos( T x )
 {
     return { static_cast< rad::value_type >( std::acos( x ) ) };
 }
@@ -405,7 +405,7 @@ TRIGONOMETRY_NODISCARD constexpr rad acos( T x )
  * \return The arc cosine of \em x as \em TO.
  */
 template< typename TO, typename T >
-TRIGONOMETRY_NODISCARD constexpr TO acos( T x )
+PG_TRIGONOMETRY_NODISCARD constexpr TO acos( T x )
 {
     auto value = TO::conversion::semicircle * std::acos( x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
@@ -419,7 +419,7 @@ TRIGONOMETRY_NODISCARD constexpr TO acos( T x )
  * \return The tangent of \em x.
  */
 template< typename T, typename CONV >
-TRIGONOMETRY_NODISCARD constexpr auto tan( basic_angle< T, CONV > x )
+PG_TRIGONOMETRY_NODISCARD constexpr auto tan( basic_angle< T, CONV > x )
 {
     auto radians = detail::trig::pi * x.angle() / CONV::semicircle;
     return std::tan( radians );
@@ -433,7 +433,7 @@ TRIGONOMETRY_NODISCARD constexpr auto tan( basic_angle< T, CONV > x )
  * \return The arc tangent of \em x as pg::math::rad.
  */
 template< typename T >
-TRIGONOMETRY_NODISCARD constexpr rad atan( T x )
+PG_TRIGONOMETRY_NODISCARD constexpr rad atan( T x )
 {
     return { static_cast< rad::value_type >( std::atan( x )  )};
 }
@@ -449,7 +449,7 @@ TRIGONOMETRY_NODISCARD constexpr rad atan( T x )
  * \return The arc tangent of \em x as \em TO.
  */
 template< typename TO, typename T >
-TRIGONOMETRY_NODISCARD constexpr TO atan( T x )
+PG_TRIGONOMETRY_NODISCARD constexpr TO atan( T x )
 {
     auto value = TO::conversion::semicircle * std::atan( x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
@@ -464,7 +464,7 @@ TRIGONOMETRY_NODISCARD constexpr TO atan( T x )
  * \return The arc tangent of \em x as pg::math::rad.
  */
 template< typename T1, typename T2 >
-TRIGONOMETRY_NODISCARD constexpr rad atan2( T1 x, T2 y )
+PG_TRIGONOMETRY_NODISCARD constexpr rad atan2( T1 x, T2 y )
 {
     return { static_cast< rad::value_type >( std::atan2( x, y )  )};
 }
@@ -482,7 +482,7 @@ TRIGONOMETRY_NODISCARD constexpr rad atan2( T1 x, T2 y )
  * \return The arc tangent of \em x, \em y as \em TO.
  */
 template< typename TO, typename T1, typename T2 >
-TRIGONOMETRY_NODISCARD constexpr TO atan2( T1 x, T2 y )
+PG_TRIGONOMETRY_NODISCARD constexpr TO atan2( T1 x, T2 y )
 {
     auto value = TO::conversion::semicircle * std::atan2( x, y ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
@@ -491,32 +491,32 @@ TRIGONOMETRY_NODISCARD constexpr TO atan2( T1 x, T2 y )
 namespace trigonometric_literals
 {
 
-TRIGONOMETRY_NODISCARD constexpr deg operator ""_deg( long double value )
+PG_TRIGONOMETRY_NODISCARD constexpr deg operator ""_deg( long double value )
 {
     return { static_cast< double >( value ) };
 }
 
-TRIGONOMETRY_NODISCARD constexpr deg operator ""_deg( unsigned long long int value )
+PG_TRIGONOMETRY_NODISCARD constexpr deg operator ""_deg( unsigned long long int value )
 {
     return { static_cast< double >( value ) };
 }
 
-TRIGONOMETRY_NODISCARD constexpr rad operator ""_rad( long double value )
+PG_TRIGONOMETRY_NODISCARD constexpr rad operator ""_rad( long double value )
 {
     return { static_cast< double >( value ) };
 }
 
-TRIGONOMETRY_NODISCARD constexpr rad operator ""_rad( unsigned long long int value )
+PG_TRIGONOMETRY_NODISCARD constexpr rad operator ""_rad( unsigned long long int value )
 {
     return { static_cast< double >( value ) };
 }
 
-TRIGONOMETRY_NODISCARD constexpr grad operator ""_grad( long double value )
+PG_TRIGONOMETRY_NODISCARD constexpr grad operator ""_grad( long double value )
 {
     return { static_cast< double >( value ) };
 }
 
-TRIGONOMETRY_NODISCARD constexpr grad operator ""_grad( unsigned long long int value )
+PG_TRIGONOMETRY_NODISCARD constexpr grad operator ""_grad( unsigned long long int value )
 {
     return { static_cast< double >( value ) };
 }
