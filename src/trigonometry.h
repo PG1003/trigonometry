@@ -246,7 +246,7 @@ protected:
  * \return An angle object with a value that is the nearest integer value not less than value of \em angle.
  */
 template< typename T, typename CONV >
-PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T, CONV > angle )
+PG_TRIGONOMETRY_NODISCARD inline basic_angle< T, CONV > ceil( basic_angle< T, CONV > angle )
 {
     return { std::ceil( angle.angle() ) };
 }
@@ -259,7 +259,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > ceil( basic_angle< T,
  * \return An angle object with a value that is the largest integer value not greater than value of \em angle.
  */
 template< typename T, typename CONV >
-PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T, CONV > angle )
+PG_TRIGONOMETRY_NODISCARD inline basic_angle< T, CONV > floor( basic_angle< T, CONV > angle )
 {
     return { std::floor( angle.angle() ) };
 }
@@ -272,7 +272,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > floor( basic_angle< T
  * \return An angle object with a value that is the nearest integer value of the value of \em angle.
  */
 template< typename T, typename CONV >
-PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > round( basic_angle< T, CONV > angle )
+PG_TRIGONOMETRY_NODISCARD inline basic_angle< T, CONV > round( basic_angle< T, CONV > angle )
 {
     return { std::round( angle.angle() ) };
 }
@@ -289,7 +289,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > round( basic_angle< T
  * \return A new angle object of type \em TO with a value derived from \em from.
  */
 template< typename TO, typename FROM_T, typename FROM_CONV >
-PG_TRIGONOMETRY_NODISCARD constexpr TO angle_cast( const basic_angle< FROM_T, FROM_CONV > from )
+PG_TRIGONOMETRY_NODISCARD inline TO angle_cast( const basic_angle< FROM_T, FROM_CONV > from )
 {
     const auto new_angle = from.angle() * ( TO::conversion::semicircle / FROM_CONV::semicircle );
     return { static_cast< typename TO::value_type >( new_angle ) };
@@ -331,7 +331,7 @@ using grad = basic_angle< double, grad_conv >;
  * \return The sine of \em x.
  */
 template< typename CONV, typename T >
-PG_TRIGONOMETRY_NODISCARD constexpr auto sin( basic_angle< T, CONV > x )
+PG_TRIGONOMETRY_NODISCARD inline auto sin( basic_angle< T, CONV > x )
 {
     auto radians = detail::trig::pi * x.angle() / CONV::semicircle;
     return std::sin( radians );
@@ -345,7 +345,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr auto sin( basic_angle< T, CONV > x )
  * \return The arc sine of \em x as pg::math::rad.
  */
 template< typename T >
-PG_TRIGONOMETRY_NODISCARD constexpr rad asin( T x )
+PG_TRIGONOMETRY_NODISCARD inline rad asin( T x )
 {
     return { static_cast< rad::value_type >( std::asin( x ) ) };
 }
@@ -361,7 +361,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr rad asin( T x )
  * \return The arc sine of \em x as \em TO.
  */
 template< typename TO, typename T >
-PG_TRIGONOMETRY_NODISCARD constexpr TO asin( T x )
+PG_TRIGONOMETRY_NODISCARD inline TO asin( T x )
 {
     auto value = TO::conversion::semicircle * std::asin( x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
@@ -375,7 +375,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr TO asin( T x )
  * \return The cosine of \em x.
  */
 template< typename T, typename CONV >
-PG_TRIGONOMETRY_NODISCARD constexpr auto cos( basic_angle< T, CONV > x )
+PG_TRIGONOMETRY_NODISCARD inline auto cos( basic_angle< T, CONV > x )
 {
     auto radians = detail::trig::pi * x.angle() / CONV::semicircle;
     return std::cos( radians );
@@ -389,7 +389,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr auto cos( basic_angle< T, CONV > x )
  * \return The arc cosine of \em x as pg::math::rad.
  */
 template< typename T >
-PG_TRIGONOMETRY_NODISCARD constexpr rad acos( T x )
+PG_TRIGONOMETRY_NODISCARD inline rad acos( T x )
 {
     return { static_cast< rad::value_type >( std::acos( x ) ) };
 }
@@ -405,7 +405,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr rad acos( T x )
  * \return The arc cosine of \em x as \em TO.
  */
 template< typename TO, typename T >
-PG_TRIGONOMETRY_NODISCARD constexpr TO acos( T x )
+PG_TRIGONOMETRY_NODISCARD inline TO acos( T x )
 {
     auto value = TO::conversion::semicircle * std::acos( x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
@@ -419,7 +419,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr TO acos( T x )
  * \return The tangent of \em x.
  */
 template< typename T, typename CONV >
-PG_TRIGONOMETRY_NODISCARD constexpr auto tan( basic_angle< T, CONV > x )
+PG_TRIGONOMETRY_NODISCARD inline auto tan( basic_angle< T, CONV > x )
 {
     auto radians = detail::trig::pi * x.angle() / CONV::semicircle;
     return std::tan( radians );
@@ -433,7 +433,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr auto tan( basic_angle< T, CONV > x )
  * \return The arc tangent of \em x as pg::math::rad.
  */
 template< typename T >
-PG_TRIGONOMETRY_NODISCARD constexpr rad atan( T x )
+PG_TRIGONOMETRY_NODISCARD inline rad atan( T x )
 {
     return { static_cast< rad::value_type >( std::atan( x )  )};
 }
@@ -449,7 +449,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr rad atan( T x )
  * \return The arc tangent of \em x as \em TO.
  */
 template< typename TO, typename T >
-PG_TRIGONOMETRY_NODISCARD constexpr TO atan( T x )
+PG_TRIGONOMETRY_NODISCARD inline TO atan( T x )
 {
     auto value = TO::conversion::semicircle * std::atan( x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
@@ -464,7 +464,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr TO atan( T x )
  * \return The arc tangent of \em x as pg::math::rad.
  */
 template< typename T1, typename T2 >
-PG_TRIGONOMETRY_NODISCARD constexpr rad atan2( T1 x, T2 y )
+PG_TRIGONOMETRY_NODISCARD inline rad atan2( T1 x, T2 y )
 {
     return { static_cast< rad::value_type >( std::atan2( x, y )  )};
 }
@@ -482,7 +482,7 @@ PG_TRIGONOMETRY_NODISCARD constexpr rad atan2( T1 x, T2 y )
  * \return The arc tangent of \em x, \em y as \em TO.
  */
 template< typename TO, typename T1, typename T2 >
-PG_TRIGONOMETRY_NODISCARD constexpr TO atan2( T1 x, T2 y )
+PG_TRIGONOMETRY_NODISCARD inline TO atan2( T1 x, T2 y )
 {
     auto value = TO::conversion::semicircle * std::atan2( x, y ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
