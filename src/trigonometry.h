@@ -2,9 +2,10 @@
 
 #include <cmath>
 #include <type_traits>
+#include <ostream>
 
 #ifdef __cpp_lib_math_constants
-#include <numbers>
+# include <numbers>
 #endif
 
 #ifdef __has_cpp_attribute
@@ -521,6 +522,12 @@ PG_TRIGONOMETRY_NODISCARD constexpr grad operator ""_grad( unsigned long long in
     return { static_cast< double >( value ) };
 }
 
+}
+
+template< typename T, typename CONV >
+std::ostream & operator <<( std::ostream & os, basic_angle< T, CONV > angle )
+{
+    return os << angle.angle();
 }
 
 }
