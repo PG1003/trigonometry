@@ -1,7 +1,6 @@
 // See LICENSE for the Copyright Notice
 
 #include <cmath>
-#include <type_traits>
 #include <ostream>
 
 #ifdef __cpp_lib_math_constants
