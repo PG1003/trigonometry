@@ -458,33 +458,33 @@ PG_TRIGONOMETRY_NODISCARD inline TO atan( T x ) noexcept
 /**
  * \brief Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
  * 
- * \param x An arithmetic value.
  * \param y An arithmetic value.
+ * \param x An arithmetic value.
  * 
- * \return The arc tangent of \em x as pg::math::rad.
+ * \return The arc tangent of \em y, \em x as pg::math::rad.
  */
 template< typename T1, typename T2 >
-PG_TRIGONOMETRY_NODISCARD inline rad atan2( T1 x, T2 y ) noexcept
+PG_TRIGONOMETRY_NODISCARD inline rad atan2( T1 y, T2 x ) noexcept
 {
-    return { static_cast< rad::value_type >( std::atan2( x, y )  )};
+    return { static_cast< rad::value_type >( std::atan2( y, x )  )};
 }
 
 /**
  * \brief Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
  * 
  * \tparam TO The resulting angle object type containing the arc tangent of \em x.
- * \tparam T1 The arithmetic type of \em x.
- * \tparam T2 The arithmetic type of \em y.
+ * \tparam T1 The arithmetic type of \em y.
+ * \tparam T2 The arithmetic type of \em x.
  * 
- * \param x An arithmetic value.
  * \param y An arithmetic value.
+ * \param x An arithmetic value.
  * 
- * \return The arc tangent of \em x, \em y as \em TO.
+ * \return The arc tangent of \em y, \em x as \em TO.
  */
 template< typename TO, typename T1, typename T2 >
-PG_TRIGONOMETRY_NODISCARD inline TO atan2( T1 x, T2 y ) noexcept
+PG_TRIGONOMETRY_NODISCARD inline TO atan2( T1 y, T2 x ) noexcept
 {
-    auto value = TO::conversion::semicircle * std::atan2( x, y ) / detail::trig::pi;
+    auto value = TO::conversion::semicircle * std::atan2( y, x ) / detail::trig::pi;
     return { static_cast< typename TO::value_type >( value ) };
 }
 
