@@ -43,7 +43,7 @@ constexpr double pi = 3.141592653589793238462643383279502884L;
  * \brief Base type for angle-like objects
  *
  * \tparam T The storage type of angle value
- * \tparam CONV The conversion object with a constexpr static 'semicircle' containing the value for a half circle.
+ * \tparam CONV The conversion object with a constexpr static \em semicircle containing the value for a half circle.
  */
 template< typename T, typename CONV >
 struct basic_angle
@@ -280,8 +280,8 @@ PG_TRIGONOMETRY_NODISCARD inline basic_angle< T, CONV > round( basic_angle< T, C
 /**
  * \brief Returns angle object of the given type that is derived another angle object.
  *
- * \tparam TO The type of the returned angle object.
- * \tparam FROM_T The storage type of the angle from which the new angle object is derived
+ * \tparam TO        The type of the returned angle object.
+ * \tparam FROM_T    The storage type of the angle from which the new angle object is derived
  * \tparam FROM_CONV The conversion object of the angle from which the new angle object is derived
  * 
  * \param angle The angle object from which the new angle object is derived.
@@ -341,7 +341,7 @@ PG_TRIGONOMETRY_NODISCARD inline auto sin( basic_angle< T, CONV > x ) noexcept
  * \brief Computes arc sine.
  * 
  * \tparam TO The resulting angle object type containing the arc sine of \em x.
- * \tparam T The arithmetic type of \em x.
+ * \tparam T  The arithmetic type of \em x.
  * 
  * \param x An arithmetic value for wich the sine is calculated.
  * 
@@ -372,7 +372,7 @@ PG_TRIGONOMETRY_NODISCARD inline auto cos( basic_angle< T, CONV > x ) noexcept
  * \brief Computes arc cosine.
  * 
  * \tparam TO The resulting angle object type containing the arc cosine of \em x.
- * \tparam T The arithmetic type of \em x.
+ * \tparam T  The arithmetic type of \em x.
  * 
  * \param x An arithmetic value for wich the cosine is calculated.
  * 
@@ -403,7 +403,7 @@ PG_TRIGONOMETRY_NODISCARD inline auto tan( basic_angle< T, CONV > x ) noexcept
  * \brief Computes arc tangent.
  * 
  * \tparam TO The resulting angle object type containing the arc tangent of \em x.
- * \tparam T The arithmetic type of \em x.
+ * \tparam T  The arithmetic type of \em x.
  * 
  * \param x An arithmetic value for wich the tangent is calculated.
  * 
