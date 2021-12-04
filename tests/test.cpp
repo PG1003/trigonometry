@@ -1,5 +1,6 @@
 #include "trigonometry.h"
 #include <iostream>
+#include <sstream>
 #include <cmath>
 
 
@@ -422,6 +423,22 @@ void atan2()
     assert_same( atan2_grad_1.angle(), 50 );
 }
 
+void formatting()
+{
+    using namespace pg::math::trigonometric_literals;
+
+    std::stringstream ss;
+    ss << 42_deg << '\n' << 1.5_rad << '\n' << 200_grad << '\n';
+
+    const auto str_stream = ss.str();
+    assert_true( str_stream == "42\n1.5\n200\n" );
+    
+#ifdef __cpp_lib_format
+    const auto str_format = std::format( "{}\n{}\n{}\n", 13.37_deg, 4.2_rad, 100_grad );
+    assert_true( str_format == "13.37\n4.2\n100\n" );
+#endif
+}
+
 
 struct conversion
 {
@@ -540,6 +557,7 @@ int main( const int /* argc */, const char ** /* argv[] */ )
     tan();
     atan();
     atan2();
+    formatting();
     readme_examples();
 
     std::cout << "Total tests: " << total_checks << ", Tests failed: " << failed_checks << '\n';
