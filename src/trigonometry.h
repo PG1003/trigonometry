@@ -7,6 +7,10 @@
 # include <numbers>
 #endif
 
+#ifdef __cpp_lib_format
+# include <format>
+#endif
+
 #ifdef __has_cpp_attribute
 # if __has_cpp_attribute( nodiscard )
 #  define PG_TRIGONOMETRY_NODISCARD [[nodiscard]]
@@ -479,3 +483,17 @@ std::ostream & operator <<( std::ostream & os, basic_angle< T, CONV > angle ) no
 }
 
 }
+
+#ifdef __cpp_lib_format
+
+template< typename T, typename CONV, typename CharT >
+struct std::formatter< pg::math::basic_angle< T, CONV >, CharT > : std::formatter< T, CharT >
+{
+    template< typename CTX >
+    auto format( pg::math::basic_angle< T, CONV > angle, CTX & ctx )
+    {
+        return std::formatter< T, CharT >::format( angle.angle(), ctx );
+    }
+};
+
+#endif
