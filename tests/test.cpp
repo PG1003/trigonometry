@@ -1,6 +1,7 @@
 #include "trigonometry.h"
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 #include <cmath>
 
 
@@ -439,6 +440,33 @@ void formatting()
 #endif
 }
 
+void adl()
+{
+    using namespace std;
+
+    const auto x = pg::math::asin( 0.5 );
+    const auto y = sin( x );
+
+    assert_same( y, 0.5 );
+}
+
+void algorithms()
+{
+    using namespace std;
+    using namespace pg::math::trigonometric_literals;
+    
+    const auto mx  = max( 45_deg, 90_deg );
+    const auto mn  = min( 45_deg, 90_deg );
+    const auto cpx = clamp( 100_deg, 45_deg, 90_deg );
+    const auto cp  = clamp( 60_deg, 45_deg, 90_deg );
+    const auto cpn = clamp( 0_deg, 45_deg, 90_deg );
+
+    assert_same( mx.angle(), 90.0 );
+    assert_same( mn.angle(), 45.0 );
+    assert_same( cpx.angle(), 90.0 );
+    assert_same( cp.angle(), 60.0 );
+    assert_same( cpn.angle(), 45.0 );
+}
 
 struct conversion
 {
@@ -558,6 +586,8 @@ int main( const int /* argc */, const char ** /* argv[] */ )
     atan();
     atan2();
     formatting();
+    adl();
+    algorithms();
     readme_examples();
 
     std::cout << "Total tests: " << total_checks << ", Tests failed: " << failed_checks << '\n';
