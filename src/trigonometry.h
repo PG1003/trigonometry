@@ -64,38 +64,16 @@ struct basic_angle
         : value( value )
     {}
 
-    constexpr basic_angle< T, CONV > operator-()
-    {
-        value = -value;
-        return *this;
-    }
-
-    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator +( basic_angle< T, CONV > other ) const
-    {
-        return { value + other.value };
-    }
-
     constexpr basic_angle< T, CONV > & operator +=( basic_angle< T, CONV > other )
     {
         value += other.value;
         return *this;
     }
 
-    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator -( const basic_angle< T, CONV > other ) const
-    {
-        return { value - other.value };
-    }
-
     constexpr basic_angle< T, CONV > & operator -=( const basic_angle< T, CONV > other )
     {
         value -= other.value;
         return *this;
-    }
-
-    template< typename D >
-    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator /( D number ) const
-    {
-        return { static_cast< T >( value / number ) };
     }
 
     template< typename D >
@@ -106,12 +84,6 @@ struct basic_angle
     }
 
     template< typename M >
-    PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator *( M number ) const
-    {
-        return { static_cast< T >( value * number ) };
-    }
-
-    template< typename M >
     constexpr basic_angle< T, CONV > operator *=( M number )
     {
         value = static_cast< T >( value * number );
@@ -119,46 +91,10 @@ struct basic_angle
     }
 
     template< typename M >
-    PG_TRIGONOMETRY_NODISCARD basic_angle< T, CONV > operator %( M number ) const noexcept
-    {
-        return { static_cast< T >( std::fmod( value, number ) ) };
-    }
-
-    template< typename M >
     basic_angle< T, CONV > operator %=( M number ) noexcept
     {
         value = static_cast< T >( std::fmod( value, number ) );
         return *this;
-    }
-
-    PG_TRIGONOMETRY_NODISCARD constexpr bool operator <( const basic_angle< T, CONV > other )
-    {
-        return value < other.value;
-    }
-
-    PG_TRIGONOMETRY_NODISCARD constexpr bool operator <=( const basic_angle< T, CONV > other )
-    {
-        return value <= other.value;
-    }
-
-    PG_TRIGONOMETRY_NODISCARD constexpr bool operator >( const basic_angle< T, CONV > other )
-    {
-        return value > other.value;
-    }
-
-    PG_TRIGONOMETRY_NODISCARD constexpr bool operator >=( const basic_angle< T, CONV > other )
-    {
-        return value >= other.value;
-    }
-
-    PG_TRIGONOMETRY_NODISCARD constexpr bool operator ==( const basic_angle< T, CONV > other )
-    {
-        return value == other.value;
-    }
-
-    PG_TRIGONOMETRY_NODISCARD constexpr bool operator !=( const basic_angle< T, CONV > other )
-    {
-        return value != other.value;
     }
 
     /**
@@ -241,6 +177,78 @@ protected:
 
     T value = T();
 };
+
+template< typename T, typename CONV >
+PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator-( basic_angle< T, CONV > angle )
+{
+    return { -angle.angle() };
+}
+
+template< typename T, typename CONV >
+PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator +( basic_angle< T, CONV > left, basic_angle< T, CONV > right )
+{
+    return { left.angle() + right.angle() };
+}
+
+template< typename T, typename CONV >
+PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator -( basic_angle< T, CONV > left, basic_angle< T, CONV > right )
+{
+    return { left.angle() - right.angle() };
+}
+
+template< typename T, typename CONV, typename D >
+PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator /( basic_angle< T, CONV > angle, D number )
+{
+    return { static_cast< T >( angle.angle() / number ) };
+}
+
+template< typename T, typename CONV, typename M >
+PG_TRIGONOMETRY_NODISCARD constexpr basic_angle< T, CONV > operator *( basic_angle< T, CONV > angle, M number )
+{
+    return { static_cast< T >( angle.angle() * number ) };
+}
+
+template< typename T, typename CONV, typename M >
+PG_TRIGONOMETRY_NODISCARD basic_angle< T, CONV > operator %( basic_angle< T, CONV > angle, M number ) noexcept
+{
+    return { static_cast< T >( std::fmod( angle.angle(), number ) ) };
+}
+
+template< typename T, typename CONV >
+PG_TRIGONOMETRY_NODISCARD constexpr bool operator <( basic_angle< T, CONV > left, basic_angle< T, CONV > right )
+{
+    return left.angle() < right.angle();
+}
+
+template< typename T, typename CONV >
+PG_TRIGONOMETRY_NODISCARD constexpr bool operator <=( basic_angle< T, CONV > left, basic_angle< T, CONV > right )
+{
+    return left.angle() <= right.angle();
+}
+
+template< typename T, typename CONV >
+PG_TRIGONOMETRY_NODISCARD constexpr bool operator >( basic_angle< T, CONV > left, basic_angle< T, CONV > right )
+{
+    return left.angle() > right.angle();
+}
+
+template< typename T, typename CONV >
+PG_TRIGONOMETRY_NODISCARD constexpr bool operator >=( basic_angle< T, CONV > left, basic_angle< T, CONV > right )
+{
+    return left.angle() >= right.angle();
+}
+
+template< typename T, typename CONV >
+PG_TRIGONOMETRY_NODISCARD constexpr bool operator ==( basic_angle< T, CONV > left, basic_angle< T, CONV > right )
+{
+    return left.angle() == right.angle();
+}
+
+template< typename T, typename CONV >
+PG_TRIGONOMETRY_NODISCARD constexpr bool operator !=( basic_angle< T, CONV > left, basic_angle< T, CONV > right )
+{
+    return left.angle() != right.angle();
+}
 
 /**
  * \brief Returns an angle object with a value that is the nearest integer value not less than value of \em angle.
