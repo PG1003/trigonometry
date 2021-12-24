@@ -213,84 +213,124 @@ void normalize()
 {
     using namespace pg::math::trigonometric_literals;
 
-    auto deg1 = 270_deg;
+    auto deg1  = 270_deg;
+    auto deg1n = deg1.normalized();
     deg1.normalize();
+    assert_same( deg1n.angle(), -90 );
     assert_same( deg1.angle(), -90 );
 
-    auto deg2 = -270_deg;
+    auto deg2  = -270_deg;
+    auto deg2n = deg2.normalized();
     deg2.normalize();
+    assert_same( deg2n.angle(), 90 );
     assert_same( deg2.angle(), 90 );
 
-    auto deg3 = 450_deg;
+    auto deg3  = 450_deg;
+    auto deg3n = deg3.normalized_abs();
     deg3.normalize_abs();
+    assert_same( deg3n.angle(), 90 );
     assert_same( deg3.angle(), 90 );
 
-    auto deg4 = -90_deg;
+    auto deg4  = -90_deg;
+    auto deg4n = deg4.normalized_abs();
     deg4.normalize_abs();
+    assert_same( deg4n.angle(), 270 );
     assert_same( deg4.angle(), 270 );
 
-    auto deg5 = 360_deg;
+    auto deg5  = 360_deg;
+    auto deg5n = deg5.normalized_abs();
     deg5.normalize_abs();
+    assert_same( deg5n.angle(), 0 );
     assert_same( deg5.angle(), 0 );
 
     ideg deg6( 270 );
+    auto deg6n = deg6.normalized();
     deg6.normalize();
+    assert_same( deg6n.angle(), -90 );
     assert_same( deg6.angle(), -90 );
 
     ideg deg7( -270 );
+    auto deg7n = deg7.normalized();
     deg7.normalize();
+    assert_same( deg7n.angle(), 90 );
     assert_same( deg7.angle(), 90 );
 
     ideg deg8( 450 );
+    auto deg8n = deg8.normalized_abs();
     deg8.normalize_abs();
+    assert_same( deg8n.angle(), 90 );
     assert_same( deg8.angle(), 90 );
 
     ideg deg9( -90 );
+    auto deg9n = deg9.normalized_abs();
     deg9.normalize_abs();
+    assert_same( deg9n.angle(), 270 );
     assert_same( deg9.angle(), 270 );
 
     ideg deg10( 360 );
+    auto deg10n = deg10.normalized_abs();
     deg10.normalize_abs();
+    assert_same( deg10n.angle(), 0 );
     assert_same( deg10.angle(), 0 );
 
-    rad rad1( 1.5 * pi );
+    rad  rad1( 1.5 * pi );
+    auto rad1n = rad1.normalized();
     rad1.normalize();
+    assert_same( rad1n.angle(), -0.5 * pi );
     assert_same( rad1.angle(), -0.5 * pi );
 
-    rad rad2( -1.5 * pi );
+    rad  rad2( -1.5 * pi );
+    auto rad2n = rad2.normalized();
     rad2.normalize();
+    assert_same( rad2n.angle(), 0.5 * pi );
     assert_same( rad2.angle(), 0.5 * pi );
 
-    rad rad3( 2.5 * pi );
+    rad  rad3( 2.5 * pi );
+    auto rad3n = rad3.normalized_abs();
     rad3.normalize_abs();
+    assert_same( rad3n.angle(), 0.5 * pi );
     assert_same( rad3.angle(), 0.5 * pi );
 
-    rad rad4( -2.5 * pi );
+    rad  rad4( -2.5 * pi );
+    auto rad4n = rad4.normalized_abs();
     rad4.normalize_abs();
+    assert_same( rad4n.angle(), 1.5 * pi );
     assert_same( rad4.angle(), 1.5 * pi );
 
-    rad rad5( 2 * pi );
+    rad  rad5( 2 * pi );
+    auto rad5n = rad5.normalized_abs();
     rad5.normalize_abs();
+    assert_same( rad5n.angle(), 0 );
     assert_same( rad5.angle(), 0 );
 
-    auto grad1 = 300_grad;
+    auto grad1  = 300_grad;
+    auto grad1n = grad1.normalized();
     grad1.normalize();
+    assert_same( grad1n.angle(), -100 );
     assert_same( grad1.angle(), -100 );
 
-    auto grad2 = -300_grad;
+    auto grad2  = -300_grad;
+    auto grad2n = grad2.normalized();
     grad2.normalize();
+    assert_same( grad2n.angle(), 100 );
     assert_same( grad2.angle(), 100 );
 
-    auto grad3 = 500_grad;
+    auto grad3  = 500_grad;
+    auto grad3n = grad3.normalized_abs();
     grad3.normalize_abs();
+    assert_same( grad3n.angle(), 100 );
     assert_same( grad3.angle(), 100 );
 
-    auto grad4 = -100_grad;
+    auto grad4  = -100_grad;
+    auto grad4n = grad4.normalized_abs();
     grad4.normalize_abs();
+    assert_same( grad4n.angle(), 300 );
     assert_same( grad4.angle(), 300 );
 
-    auto grad5 = 400_grad;
+    auto grad5  = 400_grad;
+    auto grad5n = grad5.normalized_abs();
     grad5.normalize_abs();
+    assert_same( grad5n.angle(), 0 );
     assert_same( grad5.angle(), 0 );
 }
 
