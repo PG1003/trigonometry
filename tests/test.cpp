@@ -1,7 +1,8 @@
-#include "trigonometry.h"
+#include <trigonometry.h>
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <numeric>
 #include <cmath>
 
 
@@ -457,15 +458,23 @@ void algorithms()
     
     const auto mx  = max( 45_deg, 90_deg );
     const auto mn  = min( 45_deg, 90_deg );
+
+    assert_same( mx.angle(), 90.0 );
+    assert_same( mn.angle(), 45.0 );
+
+    const pg::math::deg degrees[ 4 ] = { 42_deg, 18_deg, 333_deg, 37_deg };
+    const pg::math::deg total        = accumulate( begin( degrees ), end( degrees ), 7_deg );
+    assert_same( total.angle(), 437.0 );
+
+#if __cplusplus >= 201703L
     const auto cpx = clamp( 100_deg, 45_deg, 90_deg );
     const auto cp  = clamp( 60_deg, 45_deg, 90_deg );
     const auto cpn = clamp( 0_deg, 45_deg, 90_deg );
 
-    assert_same( mx.angle(), 90.0 );
-    assert_same( mn.angle(), 45.0 );
     assert_same( cpx.angle(), 90.0 );
     assert_same( cp.angle(), 60.0 );
     assert_same( cpn.angle(), 45.0 );
+#endif
 }
 
 struct conversion
